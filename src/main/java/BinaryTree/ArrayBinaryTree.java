@@ -23,8 +23,7 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
     /**
      * Creates a binary tree with the specified element as its root.
      *
-     * @param element the element which will become the root
-     *                of the new tree
+     * @param element the element which will become the root of the new tree
      */
     public ArrayBinaryTree(T element) {
         count = 1;

@@ -63,12 +63,12 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>{
      */
     public T find(T targetElement) throws ElementNotFoundException
     {
-        BinaryTreeNode<T> current = findAgain( targetElement, root );
+        BinaryTreeNode<T> current = findAgain( targetElement, root );//guarda o nó
 
-        if( current == null )
-            throw new ElementNotFoundException("binary tree");
+        if( current == null ) //se o nó for null significa que não encontrou
+            throw new ElementNotFoundException("Couldn't find the element");
 
-        return (current.element);
+        return (current.element);//senão for retorna o elemento desse nó
     }
 
     /**
@@ -78,20 +78,19 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>{
      * @param targetElement the element being sought in this tree
      * @param next the element to begin searching from
      */
-    private BinaryTreeNode<T> findAgain(T targetElement,
-                                        BinaryTreeNode<T> next) {
+    private BinaryTreeNode<T> findAgain(T targetElement, BinaryTreeNode<T> next) {
         if (next == null)
             return null;
 
-        if (next.element.equals(targetElement))
+        if (next.element.equals(targetElement))//verifica se o elemento do nó que recebe por parâmetro é igual ao targetElement
             return next;
 
-        BinaryTreeNode<T> temp = findAgain(targetElement, next.left);
+        BinaryTreeNode<T> temp = findAgain(targetElement, next.left);//senão for, volta a chamar o método recursivamente para comparar o filho esquerdo do nó
 
-        if (temp == null)
+        if (temp == null)//se o nó não tiver filho esquerdo (ou seja, está null), chama o método recursivamente para comparar o filho direito
             temp = findAgain(targetElement, next.right);
 
-        return temp;
+        return temp;//devolve o nó
     }
 
     /**

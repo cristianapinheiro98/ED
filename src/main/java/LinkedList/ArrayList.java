@@ -136,6 +136,10 @@ public class ArrayList<T> implements ListADT<T> {
 
 
     public class ArrayIiterator<E> implements Iterator<E> {
+        /*Para a implementação de um iterador sugere-se a criação de uma classe aninhada na lista. Desta forma podemos ter acesso aos elementos da coleção
+        já que o iterador precisa ter conhecimento interno da implementação da lista.
+        Modificação concorrente e ocorre quando a coleção é modificada estruturalmente enquanto uma interação está em curso, a solução para isto é usar
+         a var modCount na coleção para manter um registo das modificações estruturais  */
         protected int cursor = 0;
         private int expectedModCount;
         private boolean okToRemove;
@@ -143,6 +147,7 @@ public class ArrayList<T> implements ListADT<T> {
         public ArrayIiterator(){
             this.cursor = 0;
             this.expectedModCount = modCount;
+            //Quando um objeto Iterator é criado copia o valor da var modCount para uma var local expectedModCount para perceber se há descrepâncias. se houver é lançada uma exceção
             this.okToRemove = false;
         }
 
@@ -168,6 +173,8 @@ public class ArrayList<T> implements ListADT<T> {
 
         @Override
         public void remove() {
+            /* O remove é um  método opcional, no entanto como em Java não é possível definir métodos opcionais lançamos uma exceção do tipo
+            UnsupportedOperationException para informarmos que o método não está implementado.*/
             if (modCount != expectedModCount){
                 throw new ConcurrentModificationException();
             }
