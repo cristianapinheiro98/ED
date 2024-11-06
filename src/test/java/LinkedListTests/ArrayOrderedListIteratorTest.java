@@ -1,4 +1,3 @@
-package LinkedListTests;
 
 
 import LinkedList.ArrayOrderedList;

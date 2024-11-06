@@ -1,4 +1,3 @@
-package StackTests;
 
 import Exceptions.EmptyCollectionException;
 import Stack.LinkedStack;

@@ -36,7 +36,7 @@ public class ArrayList<T> implements ListADT<T> {
             this.list[i] = this.list[i + 1];
         }
 
-        this.list[--this.count] = null;
+        this.list[--this.count] = null;//ao fazer o shift a última posição previamente ocupada (count - 1) tem que passar a apontar para null pq deixa de ter elemento
         this.modCount++;
 
         return result;

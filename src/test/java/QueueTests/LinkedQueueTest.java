@@ -1,4 +1,3 @@
-package QueueTests;
 
 import Exceptions.EmptyCollectionException;
 import Queue.LinkedQueue;

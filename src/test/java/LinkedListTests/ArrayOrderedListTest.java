@@ -1,5 +1,3 @@
-package LinkedListTests;
-
 
 import Exceptions.EmptyCollectionException;
 import LinkedList.ArrayOrderedList;

@@ -1,5 +1,3 @@
-package LinkedListTests;
-
 
 import LinkedList.DoubleLinkedUnorderedList;
 import org.junit.jupiter.api.BeforeEach;

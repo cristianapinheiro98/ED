@@ -1,4 +1,4 @@
-package BinaryTree;
+package BinaryTreeTests;
 
 import Exceptions.ElementNotFoundException;
 import LinkedList.ArrayUnorderedList;
@@ -35,6 +35,10 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>{
         return this.root.element;
     }
 
+    public BinaryTreeNode<T> getRootNode() {
+        return this.root;
+    }
+
     @Override
     public boolean isEmpty() {
         return this.count == 0;
@@ -47,7 +51,11 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>{
 
     @Override
     public boolean contains(T targetElement) {
-        return find(targetElement) != null;
+        try {
+            return find(targetElement) != null;
+        } catch (ElementNotFoundException e) {
+            return false;
+        }
     }
 
     @Override
@@ -61,8 +69,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>{
      * @throws ElementNotFoundException if an element not found
      * exception occurs
      */
-    public T find(T targetElement) throws ElementNotFoundException
-    {
+    public T find(T targetElement) throws ElementNotFoundException {
         BinaryTreeNode<T> current = findAgain( targetElement, root );//guarda o nó
 
         if( current == null ) //se o nó for null significa que não encontrou
@@ -82,7 +89,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T>{
         if (next == null)
             return null;
 
-        if (next.element.equals(targetElement))//verifica se o elemento do nó que recebe por parâmetro é igual ao targetElement
+        if (next.element.equals(targetElement))//verifica se o elemento do nó que recebe por parâmetro (root) é igual ao targetElement
             return next;
 
         BinaryTreeNode<T> temp = findAgain(targetElement, next.left);//senão for, volta a chamar o método recursivamente para comparar o filho esquerdo do nó

@@ -1,4 +1,4 @@
-package BinaryTree;
+package BinaryTreeTests;
 
 /**
  * BinaryTreeNode represents a node in a binary tree with a left and
@@ -34,6 +34,18 @@ public class BinaryTreeNode<T> {
         if (right != null)
             children = children + 1 + right.numChildren();
         return children;
+    }
+
+    public T getElement(){
+        return this.element;
+    }
+
+    public BinaryTreeNode<T> getLeft(){
+        return this.left;
+    }
+
+    public BinaryTreeNode<T> getRight(){
+        return this.right;
     }
 }
 

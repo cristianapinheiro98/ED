@@ -1,9 +1,8 @@
-package BinaryTree;
+package BinaryTreeTests;
 
 import Exceptions.ElementNotFoundException;
 
-public class LinkedBinarySearchTree<T>  extends LinkedBinaryTree<T>
-        implements BinarySearchTreeADT<T> {
+public class LinkedBinarySearchTree<T>  extends LinkedBinaryTree<T> implements BinarySearchTreeADT<T> {
     /**
      * Creates an empty binary search tree.
      */
@@ -113,7 +112,6 @@ public class LinkedBinarySearchTree<T>  extends LinkedBinaryTree<T>
 
     @Override
     public void removeAllOccurrences(T targetElement) {
-        this.removeElement(targetElement);
 
         while (super.contains(targetElement)) {
             removeElement(targetElement);
@@ -122,7 +120,7 @@ public class LinkedBinarySearchTree<T>  extends LinkedBinaryTree<T>
 
     @Override
     public T removeMin() {
-        T result = null;
+       /* T result = null;
 
         if(!isEmpty()) {
             if (root.left == null) {
@@ -147,12 +145,16 @@ public class LinkedBinarySearchTree<T>  extends LinkedBinaryTree<T>
         } else {
             throw new ElementNotFoundException("binary search tree is empty");}
 
+        super.count--;*/
+
+        T result = removeElement(findMin());
+
         return result;
     }
 
     @Override
     public T removeMax() {
-        T result = null;
+        /*T result = null;
 
         if(!isEmpty()) {
             if (root.right == null) {
@@ -177,6 +179,9 @@ public class LinkedBinarySearchTree<T>  extends LinkedBinaryTree<T>
         } else {
             throw new ElementNotFoundException("binary search tree is empty");}
 
+        super.count--;*/
+
+        T result = removeElement(findMax());
         return result;
     }
 

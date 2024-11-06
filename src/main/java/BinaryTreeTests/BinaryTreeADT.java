@@ -1,6 +1,4 @@
-package BinaryTree;
-
-import Exceptions.ElementNotFoundException;
+package BinaryTreeTests;
 
 import java.util.Iterator;
 

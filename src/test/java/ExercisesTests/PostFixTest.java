@@ -1,4 +1,3 @@
-package ExercisesTests;
 
 import Exceptions.EmptyCollectionException;
 import Exercises.PostFix;

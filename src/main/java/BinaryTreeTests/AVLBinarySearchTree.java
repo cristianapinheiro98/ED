@@ -1,14 +1,46 @@
-package BinaryTree;
+package BinaryTreeTests;
 
-public class AVLBinaryTreeSearch<T> extends LinkedBinarySearchTree<T> {
+import Exceptions.ElementNotFoundException;
 
-    public AVLBinaryTreeSearch() {
+public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
+
+    public AVLBinarySearchTree() {
         super();
     }
 
-    public void addElement (T element){
+    public void addElement(T element) {
         super.addElement(element);
-        this.balance(super.root);
+
+        root = balanceTree(root);
+    }
+
+    private BinaryTreeNode<T> balanceTree(BinaryTreeNode<T> node) {
+        if (node == null) {
+            return null;
+        }
+
+        node.left = balanceTree(node.left);
+        node.right = balanceTree(node.right);
+
+        return balance(node);
+    }
+
+    @Override
+    public T removeElement(T targetElement) throws ElementNotFoundException {
+        removeAndBalance(root, targetElement);
+
+        return targetElement;
+    }
+
+    private BinaryTreeNode<T> removeAndBalance(BinaryTreeNode<T> node, T targetElement) throws ElementNotFoundException {
+        super.removeElement(targetElement);
+
+        if (node != null) {
+            node.height = Math.max(height(node.left), height(node.right)) + 1;
+
+            balance(node);
+        }
+        return node;
     }
 
     private BinaryTreeNode<T> balance(BinaryTreeNode<T> node) {
@@ -24,38 +56,32 @@ public class AVLBinaryTreeSearch<T> extends LinkedBinarySearchTree<T> {
             if (getFactor(node.right) < 0) {//verifica o fator de balanceamento da sub-árvore direita, a partir do filho direito da raiz
                 node = rotateLeft(node); // basta fazer apenas uma rotação simples à esquerda
             }
-            // Caso "direita-esquerda"
             else {
                 node = rotateDoubleLeft(node); //senão é necessário fazer uma rotação dupla à esquerda
             }
         }
 
-        // Atualiza a altura do nó após a rotação, se alguma foi feita
-        node.height = max(height(node.left), height(node.right)) + 1;
-        return node; // Retorna o nó (possivelmente atualizado) para garantir que a árvore AVL permaneça consistente
+        // Atualiza a altura do nó após a rotação caso tenha sido feita
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        return node; //Retorna o nó (possivelmente atualizado) para garantir que a árvore AVL permaneça consistente
     }
 
     private int getFactor (BinaryTreeNode<T> node) {
-        return height( node.left ) - height( node.right );
+        return height(node.left) - height(node.right);
     }
 
-
-
-    private int height(BinaryTreeNode<T> node) {
+    private int height (BinaryTreeNode<T> node) {
         return node == null ? -1 : node.height;
     }
 
-    private int max( int leftSide, int rightSide ) {
-        return leftSide > rightSide ? leftSide : rightSide;
-    }
 
     private BinaryTreeNode<T> rotateRight(BinaryTreeNode<T> node) {
         BinaryTreeNode<T> pivot = node.left; // pivot é o filho esquerdo do nó
         node.left = pivot.right;// o filho direito do pivot passa a ser o filho esquerdo do nó
         pivot.right = node;// o nó passa a ser o filho direito do pivot
 
-        node.height = max(height(node.left), height(node.right)) + 1;
-        pivot.height = max(height(pivot.left), height(pivot.right)) + 1;
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        pivot.height = Math.max(height(pivot.left), height(pivot.right)) + 1;
 
         // o pivot é o novo root, ficando assim a árvore balanceada
         return pivot;
@@ -67,8 +93,8 @@ public class AVLBinaryTreeSearch<T> extends LinkedBinarySearchTree<T> {
         pivot.left = node;//node passa a ser o filho esquerdo de pivot
 
 
-        node.height = max(height(node.left), height(node.right)) + 1;
-        pivot.height = max(height(pivot.left), height(pivot.right)) + 1;
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        pivot.height = Math.max(height(pivot.left), height(pivot.right)) + 1;
 
         //o pivot agora é a nova raiz da subárvore balanceada
         return pivot;
