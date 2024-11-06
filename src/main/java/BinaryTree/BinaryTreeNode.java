@@ -7,6 +7,7 @@ package BinaryTree;
 public class BinaryTreeNode<T> {
     protected T element;
     protected BinaryTreeNode<T> left, right;
+    protected int height;
     /**
      * Creates a new tree node with the specified data.
      *
@@ -17,6 +18,7 @@ public class BinaryTreeNode<T> {
         element = obj;
         left = null;
         right = null;
+        height = 0;
     }
 
     /**
