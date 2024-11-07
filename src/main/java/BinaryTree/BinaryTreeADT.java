@@ -1,4 +1,4 @@
-package BinaryTreeTests;
+package BinaryTree;
 
 import java.util.Iterator;
 

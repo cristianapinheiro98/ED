@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import BinaryTreeTests.AVLBinarySearchTree;
+import BinaryTree.AVLBinarySearchTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import Exceptions.ElementNotFoundException;

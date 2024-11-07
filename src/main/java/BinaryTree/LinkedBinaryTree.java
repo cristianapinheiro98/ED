@@ -1,4 +1,4 @@
-package BinaryTreeTests;
+package BinaryTree;
 
 import Exceptions.ElementNotFoundException;
 import LinkedList.ArrayUnorderedList;

@@ -1,4 +1,4 @@
-package BinaryTreeTests;
+package BinaryTree;
 
 /**
  * BinarySearchTreeADT defines the interface to a binary search tree.
