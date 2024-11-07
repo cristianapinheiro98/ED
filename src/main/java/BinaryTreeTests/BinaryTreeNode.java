@@ -40,13 +40,6 @@ public class BinaryTreeNode<T> {
         return this.element;
     }
 
-    public BinaryTreeNode<T> getLeft(){
-        return this.left;
-    }
-
-    public BinaryTreeNode<T> getRight(){
-        return this.right;
-    }
 }
 
 

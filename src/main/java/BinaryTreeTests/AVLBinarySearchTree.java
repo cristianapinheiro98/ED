@@ -10,50 +10,60 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
 
     public void addElement(T element) {
         super.addElement(element);
-
-        root = balanceTree(root);
+        //updateHeight(root);
+        //balanceTree(root);
+        root = balanceTreeAfterAddElement(root, element);
     }
 
-    private BinaryTreeNode<T> balanceTree(BinaryTreeNode<T> node) {
+    private BinaryTreeNode<T> balanceTreeAfterAddElement(BinaryTreeNode<T> node, T element) {
         if (node == null) {
             return null;
         }
 
-        node.left = balanceTree(node.left);
-        node.right = balanceTree(node.right);
+        int compareResult = ((Comparable<T>) element).compareTo(node.element);
 
-        return balance(node);
+        // Percorre a árvore para localizar o novo nó e aplicar o balanceamento
+        if (compareResult < 0) {
+            node.left = balanceTreeAfterAddElement(node.left, element);
+        } else if (compareResult > 0) {
+            node.right = balanceTreeAfterAddElement(node.right, element);
+        }
+
+        // Atualiza a altura do nó
+       updateHeight(node);
+
+        return balanceTree(node);
     }
 
     @Override
     public T removeElement(T targetElement) throws ElementNotFoundException {
-        removeAndBalance(root, targetElement);
+        BinaryTreeNode<T> node = balanceTreeAfterRemoveElement(root, targetElement);
 
-        return targetElement;
+        return node.element;
     }
 
-    private BinaryTreeNode<T> removeAndBalance(BinaryTreeNode<T> node, T targetElement) throws ElementNotFoundException {
+    private BinaryTreeNode<T> balanceTreeAfterRemoveElement(BinaryTreeNode<T> node, T targetElement) throws ElementNotFoundException {
         super.removeElement(targetElement);
 
         if (node != null) {
-            node.height = Math.max(height(node.left), height(node.right)) + 1;
+            node.height = Math.max(calculatehHeight(node.left), calculatehHeight(node.right)) + 1;
 
-            balance(node);
+            balanceTree(node);
         }
         return node;
     }
 
-    private BinaryTreeNode<T> balance(BinaryTreeNode<T> node) {
-        if (getFactor(node) == 2) {// Verifica se o fator de balanceamento indica desbalanceamento para a esquerda (alturas calculadas a partir da raiz)
-            if (getFactor(node.left) > 0) {//verifica o fator de balanceamento da sub-árvore esquerda, a partir do filho esquerdo da raiz
+    private BinaryTreeNode<T> balanceTree(BinaryTreeNode<T> node) {
+        if (getBalanceFactor(node) == 2) {// Verifica se o fator de balanceamento indica desbalanceamento para a esquerda (alturas calculadas a partir da raiz)
+            if (getBalanceFactor(node.left) > 0) {//verifica o fator de balanceamento da sub-árvore esquerda, a partir do filho esquerdo da raiz
                 node = rotateRight(node); // basta fazer apenas uma rotação simples à direita
             }
             else {
                 node = rotateDoubleRight(node); //senão é necessário fazer uma rotação dupla à direita
             }
         }
-        else if (getFactor(node) == -2) {// Verifica se o fator de balanceamento indica desbalanceamento para a direita (alturas calculadas a partir da raiz)
-            if (getFactor(node.right) < 0) {//verifica o fator de balanceamento da sub-árvore direita, a partir do filho direito da raiz
+        else if (getBalanceFactor(node) == -2) {// Verifica se o fator de balanceamento indica desbalanceamento para a direita (alturas calculadas a partir da raiz)
+            if (getBalanceFactor(node.right) < 0) {//verifica o fator de balanceamento da sub-árvore direita, a partir do filho direito da raiz
                 node = rotateLeft(node); // basta fazer apenas uma rotação simples à esquerda
             }
             else {
@@ -62,16 +72,20 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
         }
 
         // Atualiza a altura do nó após a rotação caso tenha sido feita
-        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        node.height = Math.max(calculatehHeight(node.left), calculatehHeight(node.right)) + 1;
         return node; //Retorna o nó (possivelmente atualizado) para garantir que a árvore AVL permaneça consistente
     }
 
-    private int getFactor (BinaryTreeNode<T> node) {
-        return height(node.left) - height(node.right);
+    private int getBalanceFactor(BinaryTreeNode<T> node) {
+        return calculatehHeight(node.left) - calculatehHeight(node.right);
     }
 
-    private int height (BinaryTreeNode<T> node) {
+    private int calculatehHeight(BinaryTreeNode<T> node) {
         return node == null ? -1 : node.height;
+    }
+
+    private void updateHeight(BinaryTreeNode<T> node) {
+        node.height = Math.max(calculatehHeight(node.left), calculatehHeight(node.right)) + 1;
     }
 
 
@@ -80,8 +94,8 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
         node.left = pivot.right;// o filho direito do pivot passa a ser o filho esquerdo do nó
         pivot.right = node;// o nó passa a ser o filho direito do pivot
 
-        node.height = Math.max(height(node.left), height(node.right)) + 1;
-        pivot.height = Math.max(height(pivot.left), height(pivot.right)) + 1;
+        updateHeight(node);
+        updateHeight(pivot);
 
         // o pivot é o novo root, ficando assim a árvore balanceada
         return pivot;
@@ -92,9 +106,8 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
         node.right = pivot.left;// A subárvore esquerda de pivot passa a ser a subárvore direita de node
         pivot.left = node;//node passa a ser o filho esquerdo de pivot
 
-
-        node.height = Math.max(height(node.left), height(node.right)) + 1;
-        pivot.height = Math.max(height(pivot.left), height(pivot.right)) + 1;
+        updateHeight(node);
+        updateHeight(pivot);
 
         //o pivot agora é a nova raiz da subárvore balanceada
         return pivot;
