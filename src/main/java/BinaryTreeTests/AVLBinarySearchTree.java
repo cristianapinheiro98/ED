@@ -29,7 +29,7 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
             node.right = balanceTreeAfterAddElement(node.right, element);
         }
 
-        // Atualiza a altura do nó
+
        updateHeight(node);
 
         return balanceTree(node);
