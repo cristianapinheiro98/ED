@@ -85,6 +85,10 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
     }
 
     private void updateHeight(BinaryTreeNode<T> node) {
+        /*o método calculateHeight calcula a altura da sobárvore esquerda e da subárvore direita, esses valores são
+        enviados para o método Math.max que retorna o valor maior dos 2. Posteriormente, é adicionado 1 a esse valor, o
+        que representa a altura do nó recebido por parâmetro no updateHeight*/
+
         node.height = Math.max(calculatehHeight(node.left), calculatehHeight(node.right)) + 1;
     }
 
