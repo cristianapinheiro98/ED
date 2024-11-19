@@ -10,8 +10,6 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
 
     public void addElement(T element) {
         super.addElement(element);
-        //updateHeight(root);
-        //balanceTree(root);
         root = balanceTreeAfterAddElement(root, element);
     }
 
@@ -30,7 +28,7 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
         }
 
 
-       updateHeight(node);
+        updateHeight(node);
 
         return balanceTree(node);
     }
@@ -47,9 +45,9 @@ public class AVLBinarySearchTree<T> extends LinkedBinarySearchTree<T> {
 
         if (node != null) {
             node.height = Math.max(calculatehHeight(node.left), calculatehHeight(node.right)) + 1;
-
             balanceTree(node);
         }
+
         return node;
     }
 
